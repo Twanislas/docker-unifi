@@ -33,13 +33,13 @@ apt-get install -y curl unifi
 
 # Ports
 EXPOSE \
-3478/udp \
-5656:5699/udp \
-8080/tcp \
-8443/tcp \
-8880/tcp \
-6789/tcp \
-10001/udp
+3478 \
+5656:5699 \
+8080 \
+8443 \
+8880 \
+6789 \
+10001
 
 # Volumes
 VOLUME /config
