@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /var/lib/unifi
+exec /usr/bin/java -Xmx1024M -jar /usr/lib/unifi/lib/ace.jar start
