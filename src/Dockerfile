@@ -7,11 +7,7 @@ ARG DEBIAN_FRONTEND="noninteractive"
 RUN \
 apt-get update && \
 apt-get install -y apt-utils ca-certificates curl gnupg cron python3-pip wget && \
-apt-get -y dist-upgrade && \
-apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50 && \
-apt-key adv --keyserver keyserver.ubuntu.com --recv 0C49F3730359A14518585931BC711F9BA15703C6
-
-COPY rootfs/ /
+apt-get -y dist-upgrade
 
 # Install certbot
 RUN \
@@ -19,7 +15,9 @@ pip3 install -U pyOpenSSL cryptography && \
 pip3 install -U certbot certbot-dns-ovh
 
 # Install UniFi
+COPY rootfs/ /
 RUN \
+apt-key adv --keyserver keyserver.ubuntu.com --recv 06E85760C0A52C50 && \
 apt-get update && \
 apt-get install -y unifi && \
 ln -s /var/lib/unifi /usr/lib/unifi/data
@@ -30,7 +28,7 @@ wget "https://github.com/just-containers/s6-overlay/releases/download/$(wget -q 
 tar -xzf s6-overlay-amd64.tar.gz -C / && \
 rm s6-overlay-amd64.tar.gz
 
-EXPOSE 1900/udp 3478/udp 5656-5699/udp 6789/tcp 8080/tcp 8443/tcp 8843/tcp 8880/tcp 10001/udp
+EXPOSE 1900/udp 3478/udp 5514:5514/tcp 5656-5699/udp 6789/tcp 8080/tcp 8443/tcp 8843/tcp 8880/tcp 10001/udp
 
 VOLUME /var/lib/unifi
 VOLUME /etc/letsencrypt
